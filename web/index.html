@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>俄罗斯方块 - Tetris Game</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <!-- 游戏标题 -->
+        <header class="game-header">
+            <h1 class="game-title">俄罗斯方块</h1>
+            <div class="subtitle">TETRIS GAME</div>
+        </header>
+
+        <!-- 主游戏区域 -->
+        <main class="game-main">
+            <!-- 左侧信息面板 -->
+            <aside class="info-panel left-panel">
+                <div class="panel-section">
+                    <h3>下一个方块</h3>
+                    <canvas id="nextPieceCanvas" width="120" height="120"></canvas>
+                </div>
+                
+                <div class="panel-section">
+                    <h3>游戏统计</h3>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="stat-label">分数</span>
+                            <span class="stat-value" id="score">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">等级</span>
+                            <span class="stat-value" id="level">1</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">消除行数</span>
+                            <span class="stat-value" id="lines">0</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- 游戏画布区域 -->
+            <section class="game-board">
+                <canvas id="gameCanvas" width="300" height="600"></canvas>
+                <div class="game-overlay" id="gameOverlay">
+                    <div class="overlay-content">
+                        <h2 id="overlayTitle">游戏暂停</h2>
+                        <p id="overlayMessage">按空格键继续游戏</p>
+                        <button id="restartBtn" class="game-btn">重新开始</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 右侧控制面板 -->
+            <aside class="info-panel right-panel">
+                <div class="panel-section">
+                    <h3>游戏控制</h3>
+                    <div class="controls">
+                        <button id="pauseBtn" class="control-btn">暂停/继续</button>
+                        <button id="resetBtn" class="control-btn">重新开始</button>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>操作说明</h3>
+                    <div class="instructions">
+                        <div class="instruction-item">
+                            <kbd>←</kbd><kbd>→</kbd> 左右移动
+                        </div>
+                        <div class="instruction-item">
+                            <kbd>↓</kbd> 快速下落
+                        </div>
+                        <div class="instruction-item">
+                            <kbd>↑</kbd> 旋转方块
+                        </div>
+                        <div class="instruction-item">
+                            <kbd>空格</kbd> 暂停游戏
+                        </div>
+                        <div class="instruction-item">
+                            <kbd>R</kbd> 重新开始
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>计分规则</h3>
+                    <div class="scoring">
+                        <div class="score-item">1行: 100分</div>
+                        <div class="score-item">2行: 300分</div>
+                        <div class="score-item">3行: 500分</div>
+                        <div class="score-item">4行: 800分</div>
+                        <div class="score-note">分数会根据等级倍增</div>
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <!-- 底部信息 -->
+        <footer class="game-footer">
+            <p>使用现代Web技术实现的经典俄罗斯方块游戏</p>
+            <p>C++后端逻辑 + HTML5前端呈现</p>
+        </footer>
+    </div>
+
+    <!-- 音效控制 -->
+    <div class="audio-controls">
+        <button id="muteBtn" class="audio-btn" title="音效开关">🔊</button>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/tetris.js"></script>
+    <script src="js/renderer.js"></script>
+    <script src="js/input.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html> 

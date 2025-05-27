@@ -1,0 +1,397 @@
+/* 俄罗斯方块游戏样式 */
+
+/* 全局样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Orbitron', monospace;
+    background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+    color: #ffffff;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* 游戏容器 */
+.game-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 游戏标题 */
+.game-header {
+    text-align: center;
+    margin-bottom: 30px;
+    background: linear-gradient(45deg, #00d4ff, #ff00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.game-title {
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 10px;
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    opacity: 0.8;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 20px rgba(0, 212, 255, 0.5); }
+    to { text-shadow: 0 0 30px rgba(255, 0, 255, 0.8); }
+}
+
+/* 主游戏区域 */
+.game-main {
+    display: grid;
+    grid-template-columns: 250px 1fr 250px;
+    gap: 30px;
+    flex: 1;
+    align-items: start;
+}
+
+/* 信息面板 */
+.info-panel {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.panel-section {
+    margin-bottom: 25px;
+}
+
+.panel-section:last-child {
+    margin-bottom: 0;
+}
+
+.panel-section h3 {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    color: #00d4ff;
+    border-bottom: 2px solid rgba(0, 212, 255, 0.3);
+    padding-bottom: 5px;
+}
+
+/* 下一个方块预览 */
+#nextPieceCanvas {
+    display: block;
+    margin: 0 auto;
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+/* 游戏统计 */
+.stats {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border-left: 3px solid #00d4ff;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.stat-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #00ff88;
+}
+
+/* 游戏画布区域 */
+.game-board {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#gameCanvas {
+    background: rgba(0, 0, 0, 0.8);
+    border: 3px solid #00d4ff;
+    border-radius: 15px;
+    box-shadow: 
+        0 0 30px rgba(0, 212, 255, 0.3),
+        inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* 游戏覆盖层 */
+.game-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.game-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.overlay-content {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.overlay-content h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: #ff00ff;
+}
+
+.overlay-content p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+/* 按钮样式 */
+.game-btn, .control-btn {
+    background: linear-gradient(45deg, #00d4ff, #ff00ff);
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Orbitron', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.game-btn:hover, .control-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
+}
+
+.control-btn {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.control-btn:last-child {
+    margin-bottom: 0;
+}
+
+/* 操作说明 */
+.instructions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.instruction-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+}
+
+kbd {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    font-family: 'Orbitron', monospace;
+    color: #00d4ff;
+    min-width: 24px;
+    text-align: center;
+}
+
+/* 计分规则 */
+.scoring {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.score-item {
+    font-size: 0.9rem;
+    padding: 4px 8px;
+    background: rgba(0, 255, 136, 0.1);
+    border-radius: 4px;
+    border-left: 2px solid #00ff88;
+}
+
+.score-note {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    font-style: italic;
+    margin-top: 5px;
+}
+
+/* 底部信息 */
+.game-footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    opacity: 0.7;
+}
+
+.game-footer p {
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+/* 音效控制 */
+.audio-controls {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.audio-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.audio-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+    .game-main {
+        grid-template-columns: 200px 1fr 200px;
+        gap: 20px;
+    }
+    
+    .info-panel {
+        padding: 15px;
+    }
+    
+    .game-title {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-main {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .left-panel {
+        order: 2;
+    }
+    
+    .game-board {
+        order: 1;
+    }
+    
+    .right-panel {
+        order: 3;
+    }
+    
+    .game-title {
+        font-size: 2rem;
+    }
+    
+    #gameCanvas {
+        width: 250px;
+        height: 500px;
+    }
+    
+    .info-panel {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-container {
+        padding: 10px;
+    }
+    
+    .game-title {
+        font-size: 1.8rem;
+    }
+    
+    #gameCanvas {
+        width: 200px;
+        height: 400px;
+    }
+    
+    .info-panel {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.game-container > * {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* 方块颜色定义（用于JavaScript） */
+:root {
+    --tetris-empty: rgba(255, 255, 255, 0.05);
+    --tetris-i: #00ffff;     /* 青色 - I型 */
+    --tetris-o: #ffff00;     /* 黄色 - O型 */
+    --tetris-t: #800080;     /* 紫色 - T型 */
+    --tetris-s: #00ff00;     /* 绿色 - S型 */
+    --tetris-z: #ff0000;     /* 红色 - Z型 */
+    --tetris-j: #0000ff;     /* 蓝色 - J型 */
+    --tetris-l: #ffa500;     /* 橙色 - L型 */
+    --tetris-ghost: rgba(255, 255, 255, 0.2);
+} 
