@@ -1,4 +1,4 @@
-// 俄罗斯方块游戏逻辑 (JavaScript版本)
+// 俄罗斯方块游戏逻辑 (JavaScript版本) - 修复版
 
 // 方块类型定义
 const PieceType = {
@@ -271,8 +271,13 @@ class TetrisGame {
             const boardX = pos.x;
             const boardY = pos.y;
             
-            // 检查边界
-            if (boardX < 0 || boardX >= this.BOARD_WIDTH || boardY >= this.BOARD_HEIGHT) {
+            // 检查左右边界
+            if (boardX < 0 || boardX >= this.BOARD_WIDTH) {
+                return false;
+            }
+            
+            // 检查底部边界
+            if (boardY >= this.BOARD_HEIGHT) {
                 return false;
             }
             
@@ -379,7 +384,26 @@ class TetrisGame {
         return Math.max(50, 1000 - (this.level - 1) * 100);
     }
 
-
+    // 获取幽灵方块位置（预览下落位置）- 修复版
+    getGhostPiece() {
+        if (!this.currentPiece) return null;
+        
+        const ghostPiece = this.currentPiece.copy();
+        
+        // 持续下移直到找到最终位置
+        while (true) {
+            const testPiece = ghostPiece.copy();
+            testPiece.move(0, 1);
+            
+            if (this.isValidPosition(testPiece, testPiece.x, testPiece.y)) {
+                ghostPiece.move(0, 1);
+            } else {
+                break;
+            }
+        }
+        
+        return ghostPiece;
+    }
 
     // 获取游戏状态
     getGameState() {
