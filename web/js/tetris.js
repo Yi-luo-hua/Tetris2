@@ -380,16 +380,26 @@ class TetrisGame {
     }
 
     // 获取幽灵方块位置（预览下落位置）
-    getGhostPiece() {
-        if (!this.currentPiece) return null;
+// 获取幽灵方块位置（预览下落位置）
+getGhostPiece() {
+    if (!this.currentPiece) return null;
+    
+    const ghostPiece = this.currentPiece.copy();
+    
+    // 持续下移直到找到最终位置
+    while (true) {
+        const testPiece = ghostPiece.copy();
+        testPiece.move(0, 1);
         
-        const ghostPiece = this.currentPiece.copy();
-        while (this.isValidPosition(ghostPiece, ghostPiece.x, ghostPiece.y + 1)) {
+        if (this.isValidPosition(testPiece, testPiece.x, testPiece.y)) {
             ghostPiece.move(0, 1);
+        } else {
+            break;
         }
-        
-        return ghostPiece;
     }
+    
+    return ghostPiece;
+}
 
     // 获取游戏状态
     getGameState() {
